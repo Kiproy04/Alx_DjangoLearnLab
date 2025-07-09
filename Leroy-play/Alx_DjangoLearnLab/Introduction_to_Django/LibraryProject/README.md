@@ -1,1 +1,3 @@
-My first django project
+"My first django project."
+"Name is Leroy."
+"A library project build."
