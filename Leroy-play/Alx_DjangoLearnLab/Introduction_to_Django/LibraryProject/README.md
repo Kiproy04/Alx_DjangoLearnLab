@@ -1,3 +1,2 @@
-from django.http import HttpResponse
+python manage.py runserver
 
-def index(request): return HttpResponse("Welcome to my book store.”)
