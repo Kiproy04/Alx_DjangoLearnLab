@@ -1,3 +1,3 @@
-"My first django project."
-"Name is Leroy."
-"A library project build."
+from django.http import HttpResponse
+
+def index(request): return HttpResponse("Welcome to my book store.”)
