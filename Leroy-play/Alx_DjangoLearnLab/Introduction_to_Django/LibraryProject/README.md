@@ -7,4 +7,3 @@ This is a basic Django project created for learning purposes. It includes the se
 1. Install Django:
 ```bash
 pip install django
-
