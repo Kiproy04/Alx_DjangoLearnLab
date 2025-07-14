@@ -1,2 +1,2 @@
 #To create a new book instance
-new_book = Book("book details")  #output creates a new book with the provided infor
+"Book.objects.create", "title", "author", "George Orwell"  #output creates a new book with the provided infor
