@@ -7,4 +7,4 @@ class BookAdmin(admin.ModelAdmin):
 
 # Register your models here.
 admin.ModelAdmin
-admin.site.register(Book, BookAmin)
+admin.site.register(Book, BookAdmin)
