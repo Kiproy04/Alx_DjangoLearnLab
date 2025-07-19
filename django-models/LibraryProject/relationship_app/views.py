@@ -22,10 +22,7 @@ class LibraryDetailView(DetailView):
         context['list_books'] = library.list_books()
 
 
-class MyView(TemplateView):
-    template_name = ['relationship_app/library_detail.html', 
-                     'relationship_app/list_books.html',
-                     ]
+
 
 
 
