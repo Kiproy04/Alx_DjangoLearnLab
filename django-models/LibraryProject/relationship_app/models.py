@@ -24,12 +24,18 @@ class Author(models.Model):
 @permission_required
 class Book(models.Model):
     class Meta:
-        permissions = []
+        ["permissions"]
     title = models.CharField(max_length=200)
     author = models.ForeignKey(Author, on_delete=models.CASCADE)
 
     def __str__(self):
         return f"Book: {self.title} {self.author}"
+
+    def can_add_book():
+
+    def can_change_book():
+
+    def can_delete_book():
     
     
 

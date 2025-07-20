@@ -26,11 +26,7 @@ class LibraryDetailView(DetailView):
 class UserCreationForm():
     template_name = 'relationship_app/register.html'
 
-    def can_add_book():
-
-    def can_change_book():
-
-    def can_delete_book():
+    
     
 
 
