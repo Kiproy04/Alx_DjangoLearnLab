@@ -15,10 +15,13 @@ class Author(models.Model):
 
 @permission_required
 class Book(models.Model):
-    class Meta():
-        def can_add_book(permissions):
-        def can_change_book(permissions):
-        def can_delete_book(permissions):
+    class Meta:
+        permissions = (
+            "relationship_app.can_add_book", 
+            "relationship_app.can_change_book", 
+            "relationship_app.can_delete_book",
+        )
+
     title = models.CharField(max_length=200)
     author = models.ForeignKey(Author, on_delete=models.CASCADE)
 
