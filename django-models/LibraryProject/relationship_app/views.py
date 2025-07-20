@@ -44,7 +44,7 @@ class LogoutView(auth_views.LogoutView):
 
 
     # template_name = 'relationship_app/register.html'
-@login_reguired
+@permission_required
 def is_admin(user):
     return hasattr(user, 'UserProfile') and user.UserProfile.role == 'Admin'
 
@@ -65,7 +65,7 @@ def is_librarian(user):
 @user_passes_test(is_librarian)
 def librarian_view(request):
     return render(request, 'relationship_app/librarian_view.html')
-    
+@login_required    
 class Register:
     def register_view(request):
         if request.method == 'POST':
