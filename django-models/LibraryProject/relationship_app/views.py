@@ -23,6 +23,9 @@ class LibraryDetailView(DetailView):
         library = Library.books.all()
         context['list_books'] = library.list_books()
 
+class UserCreationForm():
+    template_name = 'relationship_app/register.html'
+    
 @user_passes_test
 class AdminDetailView():
 
