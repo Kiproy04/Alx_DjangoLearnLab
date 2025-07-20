@@ -1,10 +1,10 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.generic.detail import DetailView
 from .models import Book, Author, Library, Librarian, UserProfile
 from django.views.generic import TemplateView
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.decorators import permission_required, user_passes_test
+from django.contrib.auth.decorators import permission_required, user_passes_test, login_required
 
 # Create your views here.
 def list_books(request):
@@ -24,28 +24,60 @@ class LibraryDetailView(DetailView):
         context['list_books'] = library.list_books()
 
 class UserCreationForm():
-    template_name = 'relationship_app/register.html'
+    form_class = UserCreationForm
+    success_url = '/login/'
+    def get(self, request, *args, **kwargs):
+        form = self.form_class()
+        return render(request, self.template_name, {'form': form})
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return redirect(self.success_url)
+        return render(request, self.template_name, {'form': form})
+from django.contrib.auth import views as auth_views
+class LoginView(auth_views.LoginView):
+    template_name = 'relationship_app/login.html'
+class LogoutView(auth_views.LogoutView):
+    template_name = 'relationship_app/logout.html'
 
-    def is_admin(user):
-        return hasattr(user, 'UserProfile') and user.UserProfile.role == 'Admin'
 
-    @user_passes_test(is_admin)
-    def admin_view(request):
-        return render(request, 'relationship_app/admin_view.html')
+    # template_name = 'relationship_app/register.html'
+@login_reguired
+def is_admin(user):
+    return hasattr(user, 'UserProfile') and user.UserProfile.role == 'Admin'
 
-    def is_member(user):
-        return hasattr(user, 'UserProfile') and user.UserProfile.role == 'Member'
+@user_passes_test(is_admin)
+def admin_view(request):
+    return render(request, 'relationship_app/admin_view.html')
 
-    @user_passes_test(is_member)
-    def member_view(request):
-        return render(request, 'relationship_app/member_view.html')
+def is_member(user):
+    return hasattr(user, 'UserProfile') and user.UserProfile.role == 'Member'
+
+@user_passes_test(is_member)
+def member_view(request):
+    return render(request, 'relationship_app/member_view.html')
     
-    def is_librarian(user):
-        return hasattr(user, 'UserProfile') and user.UserProfile.role == 'Librarian'
+def is_librarian(user):
+    return hasattr(user, 'UserProfile') and user.UserProfile.role == 'Librarian'
 
-    @user_passes_test(is_librarian)
-    def librarian_view(request):
-        return render(request, 'relationship_app/librarian_view.html')
+@user_passes_test(is_librarian)
+def librarian_view(request):
+    return render(request, 'relationship_app/librarian_view.html')
+    
+class Register:
+    def register_view(request):
+        if request.method == 'POST':
+            form = UserCreationForm(request.POST)
+            if form.is_valid():
+                user = form.save()
+                login(request, user)
+                return redirect('home')
+        else:
+            form = UserCreationForm()
+        return render(request, 'relationship_app/register.html', {'form': form})
+
 
 
 

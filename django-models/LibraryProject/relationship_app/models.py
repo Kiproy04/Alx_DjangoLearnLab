@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.decorators import permission_required
+from django.contrib.auth.decorators import permission_required, loginrequired
 from django.contrib.auth.models import User
 # Create your models here.
 
@@ -10,7 +10,7 @@ class UserProfile(models.Model):
         ('Librarian', 'Librarian'),
         ('Member', 'Member'),
     )
-    user = models.OneToOneField(User)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     role = models.CharField(max_length=100, choices=ROLE_CHOICES)
 
     def __str__(self):
@@ -32,10 +32,13 @@ class Book(models.Model):
         return f"Book: {self.title} {self.author}"
 
     def can_add_book():
+        return True
 
     def can_change_book():
+        return True
 
     def can_delete_book():
+        return True
     
     
 
