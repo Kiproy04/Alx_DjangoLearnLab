@@ -1,11 +1,10 @@
 from django.shortcuts import render
 from django.views.generic.detail import DetailView
-from .models import Book, Author, Librarian
-from .models import Library
+from .models import Book, Author, Library, Librarian
 from django.views.generic import TemplateView
 from django.contrib.auth import login
-from from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.decorators import  permission
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.decorators import permission
 
 # Create your views here.
 def list_books(request):
