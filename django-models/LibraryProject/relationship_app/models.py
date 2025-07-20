@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.contrib.auth.decorators import permission_required
 # Create your models here.
 
 
