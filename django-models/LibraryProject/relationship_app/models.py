@@ -24,7 +24,7 @@ class Author(models.Model):
 @permission_required
 class Book(models.Model):
     class Meta:
-
+        permissions = []
     title = models.CharField(max_length=200)
     author = models.ForeignKey(Author, on_delete=models.CASCADE)
 
