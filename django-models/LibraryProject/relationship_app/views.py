@@ -44,7 +44,7 @@ class LogoutView(auth_views.LogoutView):
 
 
     # template_name = 'relationship_app/register.html'
-@permission_required
+
 def is_admin(user):
     return hasattr(user, 'UserProfile') and user.UserProfile.role == 'Admin'
 
@@ -77,6 +77,11 @@ class Register:
         else:
             form = UserCreationForm()
         return render(request, 'relationship_app/register.html', {'form': form})
+
+@permission_required
+relationship_app.can_add_book 
+relationship_app.can_change_book
+relationship_app.can_delete_book
 
 
 
