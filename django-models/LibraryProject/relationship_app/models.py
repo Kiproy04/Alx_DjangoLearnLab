@@ -5,8 +5,16 @@ from django.contrib.auth.models import User
 
 
 class UserProfile(models.Model):
+    ROLE_CHOICES = (
+        ('Admin', 'Admin'),
+        ('Librarian', 'Librarian'),
+        ('Member', 'Member'),
+    )
     user = models.OneToOneField(User)
-    role = models.CharField(Admin, Librarian, Member)
+    role = models.CharField(max_length=100, choices=ROLE_CHOICES)
+
+    def __str__(self):
+        return f"{self.user.username} - {self.role}"
 class Author(models.Model):
     name = models.CharField(max_length=40)
 
@@ -15,8 +23,6 @@ class Author(models.Model):
 
 @permission_required
 class Book(models.Model):
-    class Meta:
-        permissions = ["relationship_app.can_add_book", "relationship_app.can_change_book", "relationship_app.can_delete_book"]
 
     title = models.CharField(max_length=200)
     author = models.ForeignKey(Author, on_delete=models.CASCADE)

@@ -8,7 +8,7 @@ from django.contrib.auth.decorators import permission_required
 
 # Create your views here.
 def list_books(request):
-    books = Book.objects.all()
+    books = Book.objects.get()
     author = Author.objects.filter(Book)
     context = {'list_books': books}
     return render(request, 'relationship_app/list_books.html', context)
@@ -25,6 +25,12 @@ class LibraryDetailView(DetailView):
 
 class UserCreationForm():
     template_name = 'relationship_app/register.html'
+
+    def can_add_book():
+
+    def can_change_book():
+
+    def can_delete_book():
     
 
 
