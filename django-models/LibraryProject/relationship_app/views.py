@@ -3,6 +3,9 @@ from django.views.generic.detail import DetailView
 from .models import Book, Author, Librarian
 from .models import Library
 from django.views.generic import TemplateView
+from django.contrib.auth import login
+from from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.decorators import  permission
 
 # Create your views here.
 def list_books(request):
@@ -20,6 +23,13 @@ class LibraryDetailView(DetailView):
         context = super().get_context_data(**kwargs)
         library = Library.books.all()
         context['list_books'] = library.list_books()
+
+@user_passes_test
+class AdminDetailView():
+
+class MemberDetailView():
+
+class LibrarianDetailView():
 
 
 
