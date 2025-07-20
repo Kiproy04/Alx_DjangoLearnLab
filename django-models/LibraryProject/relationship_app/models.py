@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.decorators import permission_required
+from django.contrib.auth.models import User
 # Create your models here.
 
 
@@ -14,10 +15,10 @@ class Author(models.Model):
 
 @permission_required
 class Book(models.Model):
-    class Meta(permissions):
-        def can_add_book():
-        def can_change_book():
-        def can_delete_book():
+    class Meta():
+        def can_add_book(permissions):
+        def can_change_book(permissions):
+        def can_delete_book(permissions):
     title = models.CharField(max_length=200)
     author = models.ForeignKey(Author, on_delete=models.CASCADE)
 
