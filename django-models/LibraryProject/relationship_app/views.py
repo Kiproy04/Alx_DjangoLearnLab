@@ -8,7 +8,7 @@ from django.contrib.auth.decorators import permission_required, user_passes_test
 
 # Create your views here.
 def list_books(request):
-    books = Book.objects.get()
+    books = Book.objects.all()
     author = Author.objects.filter(Book)
     context = {'list_books': books}
     return render(request, 'relationship_app/list_books.html', context)
