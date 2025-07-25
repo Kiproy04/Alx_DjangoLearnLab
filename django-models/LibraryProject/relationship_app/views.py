@@ -23,20 +23,7 @@ class LibraryDetailView(DetailView):
         library = self.get_object(pk=pk)
         context ['list_books'] = library.list_books()
 
-# class UserCreationForm():
-#     form_class = UserCreationForm
-#     success_url = '/login/'
-#     def get(self, request, *args, **kwargs):
-#         form = self.form_class()
-#         return render(request, self.template_name, {'form': form})
-#     def post(self, request, *args, **kwargs):
-#         form = self.form_class(request.POST)
-#         if form.is_valid():
-#             user = form.save()
-#             login(request, user)
-#             return redirect(self.success_url)
-#         return render(request, self.template_name, {'form': form})
-# from django.contrib.auth import views as auth_views
+
 # class LoginView(auth_views.LoginView):
 #     template_name = 'relationship_app/login.html'
 # class LogoutView(auth_views.LogoutView):
