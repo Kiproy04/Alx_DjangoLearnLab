@@ -1,9 +1,11 @@
 from django.shortcuts import render, redirect
 from django.views.generic.detail import DetailView
-from .models import Book, Author, Librarian, UserProfile
+from .models import Book, Author, Librarian, UserProfile, User
 from .models import Library
 from django.contrib.auth.views import LoginView, LogoutView
-from .forms import RegisterForm
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import login
+from django import forms
 from django.contrib.auth.decorators import permission_required, user_passes_test, login_required
 
 # Create your views here.
@@ -21,6 +23,13 @@ class LibraryDetailView(DetailView):
         context = super().get_context_data(**kwargs)
         library = self.get_object(pk=pk)
         context ['list_books'] = library.list_books()
+
+class RegisterForm(UserCreationForm):
+    email = forms.EmailField(required=True)
+
+    class Meta:
+        model = User
+        fields = ["username", "email", "password1", "password2"]
 
 class CustomLoginView(LoginView):
     template_name = 'relationship_app/login.html'
