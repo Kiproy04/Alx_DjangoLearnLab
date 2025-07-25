@@ -24,7 +24,7 @@ class LibraryDetailView(DetailView):
         library = self.get_object(pk=pk)
         context ['list_books'] = library.list_books()
 
-class RegisterForm(UserCreationForm):
+class UserCreationForm(UserCreationForm):
     email = forms.EmailField(required=True)
 
     class Meta:
@@ -39,13 +39,13 @@ class LogoutView:
 
 def register(request):
     if request.method == 'POST':
-        form = RegisterForm(request.POST)
+        form = UserCreationForm(request.POST)
         if form.is_valid():
             user = form.save()
             login(request, user)
             return redirect('admin')  
     else:
-        form = RegisterForm()
+        form = UserCreationForm()
     return render(request, 'relationship_app/register.html', {'form': form})
 
 
