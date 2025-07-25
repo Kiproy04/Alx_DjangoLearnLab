@@ -31,10 +31,10 @@ class RegisterForm(UserCreationForm):
         model = User
         fields = ["username", "email", "password1", "password2"]
 
-class CustomLoginView(LoginView):
+class LoginView:
     template_name = 'relationship_app/login.html'
 
-class CustomLogoutView(LogoutView):
+class LogoutView:
     template_name = 'relationship_app/logout.html'
 
 def register_view(request):
