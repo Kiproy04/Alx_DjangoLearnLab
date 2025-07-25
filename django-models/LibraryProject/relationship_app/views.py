@@ -37,7 +37,7 @@ class LoginView:
 class LogoutView:
     template_name = 'relationship_app/logout.html'
 
-def register_view(request):
+def register(request):
     if request.method == 'POST':
         form = RegisterForm(request.POST)
         if form.is_valid():
