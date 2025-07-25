@@ -24,51 +24,6 @@ class LibraryDetailView(DetailView):
         context ['list_books'] = library.list_books()
 
 
-# class LoginView(auth_views.LoginView):
-#     template_name = 'relationship_app/login.html'
-# class LogoutView(auth_views.LogoutView):
-#     template_name = 'relationship_app/logout.html'
-
-
-#     # template_name = 'relationship_app/register.html'
-
-# def is_admin(user):
-#     return hasattr(user, 'UserProfile') and user.UserProfile.role == 'Admin'
-
-# @user_passes_test(is_admin)
-# def admin_view(request):
-#     return render(request, 'relationship_app/admin_view.html')
-
-# def is_member(user):
-#     return hasattr(user, 'UserProfile') and user.UserProfile.role == 'Member'
-
-# @user_passes_test(is_member)
-# def member_view(request):
-#     return render(request, 'relationship_app/member_view.html')
-    
-# def is_librarian(user):
-#     return hasattr(user, 'UserProfile') and user.UserProfile.role == 'Librarian'
-
-# @user_passes_test(is_librarian)
-# def librarian_view(request):
-#     return render(request, 'relationship_app/librarian_view.html')
-# @login_required    
-# class Register:
-#     def register_view(request):
-#         if request.method == 'POST':
-#             form = UserCreationForm(request.POST)
-#             if form.is_valid():
-#                 user = form.save()
-#                 login(request, user)
-#                 return redirect('home')
-#         else:
-#             form = UserCreationForm()
-#         return render(request, 'relationship_app/register.html', {'form': form})
-
-# @permission_required
-# relationship_app.can_add_book 
-# relationship_app.can_change_book
-# relationship_app.can_delete_book
 
 
 
