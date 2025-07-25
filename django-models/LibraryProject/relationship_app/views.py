@@ -70,6 +70,38 @@ def is_member(user):
 def member_view(request):
     return render(request, 'relationship_app/member_view.html')
 
+@login_required 
+@permission_required('relationship_app.can_add_book')
+def add_book(request):
+    ...
+    # if request.method == 'POST':
+    #     form = BookForm(request.POST)
+    #     if form.is_valid():
+    #         form.save()
+    #         return redirect('list_books')
+    # else:
+    #     form = BookForm()
+    # return render(request, 'relationship_app/add_book.html', {'form': form})
+
+@login_required
+@permission_required('relationship_app.can_change_book')
+def edit_book(request, pk):
+    ...
+    # book = Book.objects.get(pk=pk)
+    # if request.method == 'POST':
+    #     form = BookForm(request.POST, instance=book)
+    #     if form.is_valid():
+    #         form.save()
+    #         return redirect('list_books')
+    # else:
+    #     form = BookForm(instance=book)
+    # return render(request, 'relationship_app/edit_book.html', {'form': form})
+
+@login_required
+@permission_required('relationship_app.can_delete_book')
+def delete_book(request, pk):   
+    ...
+
 
 
 
