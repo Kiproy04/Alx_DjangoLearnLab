@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.decorators import permission_required, loginrequired
+from django.contrib.auth.decorators import loginrequired
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
@@ -49,17 +49,7 @@ class Book(models.Model):
             ('can_delete_book', 'Can delete book'),
         )
 
-        def can_add_book():
-            # return True
-
-        def can_change_book():
-            # return True
-
-        def can_delete_book():
-            # return True
     
-    
-
 class Library(models.Model):
     name = models.CharField(max_length=50)
     books = models.ManyToManyField(Book)
