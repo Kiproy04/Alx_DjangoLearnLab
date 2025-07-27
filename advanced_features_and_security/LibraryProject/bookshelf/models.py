@@ -37,3 +37,11 @@ class Book(models.Model):
 
         def __str__(self):
                 return f"Book: {self.title} {self.author} {self.publication_year}"
+        
+        class Meta:
+                permissions = [
+                        ("can_view_book", "Can view book"),  
+                        ("can_create_book", "Can create book"),
+                        ("can_edit_book", "Can edit book" ),
+                        ("can_delete_book", "Can delete book"),
+                ]
