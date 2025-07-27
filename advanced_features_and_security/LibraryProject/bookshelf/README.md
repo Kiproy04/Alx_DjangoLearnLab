@@ -1,0 +1,2 @@
+How to configure and use permissions and groups
+Define a custom or pre-existing models with permissions create an instance view using the @permissionrequired decorator which allows view based on the permissions assigned. You can also directly control and manage permmissions and groups via the admin site.
