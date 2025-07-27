@@ -19,9 +19,9 @@ class LibraryDetailView(DetailView):
     model = Library
     template_name = 'relationship_app/library_detail.html'
 
-    def get_context_data(self, pk, **kwargs):
+    def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        library = self.get_object(pk=pk)
+        library = self.get_object()
         context ['list_books'] = library.list_books()
 
 class UserCreationForm(UserCreationForm):
@@ -43,7 +43,7 @@ def register(request):
         if form.is_valid():
             user = form.save()
             login(request, user)
-            return redirect('admin')  
+            return redirect('UserCreationForm')  
     else:
         form = UserCreationForm()
     return render(request, 'relationship_app/register.html', {'form': form})
@@ -106,8 +106,9 @@ def delete_book(request, pk):
     ...
 
 
-
-
+from django.http import HttpResponse
+def home_view(request):
+    return HttpResponse("Welcome to the homepage!")
 
 
 
