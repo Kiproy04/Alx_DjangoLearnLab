@@ -24,10 +24,3 @@ class  BookViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         queryset = self.queryset
         return queryset
-
-def obtain_auth_token(request):
-    """
-    Obtain the authentication token for the user.
-    """
-    from rest_framework.authtoken.views import obtain_auth_token
-    return obtain_auth_token(request)
