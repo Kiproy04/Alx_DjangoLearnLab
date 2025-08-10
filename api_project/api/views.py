@@ -10,10 +10,9 @@ class BookList(generics.ListAPIView):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['books'] = self.queryset
-        return context
+    def get_queryset(self):
+        queryset = self.queryset
+        return queryset
 
 class  BookViewSet(viewsets.ModelViewSet):
     authentication_classes = [TokenAuthentication]
