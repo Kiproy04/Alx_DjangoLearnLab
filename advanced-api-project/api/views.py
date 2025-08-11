@@ -9,11 +9,10 @@ class BookListView(generics.ListAPIView):
     serializer_class = BookSerializer
     permission_classes = [permissions.AllowAny]  
 
-class BookListView(generics.ListAPIView):
+class BookDetailView(generics.RetrieveAPIView):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
-    permission_classes = [permissions.AllowAny]  # read-only for everyone
-
+    permission_classes = [permissions.AllowAny]
 class IsOwnerOrReadOnly(BasePermission):
     """
     Allow safe methods for everyone. For write methods, only allow the object's creator or staff.
