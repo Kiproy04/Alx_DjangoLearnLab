@@ -2,31 +2,22 @@ from django.shortcuts import render
 from .models import Book
 from .serializers import BookSerializer
 from rest_framework import generics, permissions, filters
-from rest_framework.permissions import SAFE_METHODS, BasePermission
+from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated
 # Create your views here.
 class BookListView(generics.ListAPIView):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
-    permission_classes = [permissions.AllowAny]  
+    permission_classes = [IsAuthenticatedOrReadOnly]  
 
 class BookDetailView(generics.RetrieveAPIView):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
-    permission_classes = [permissions.AllowAny]
-class IsOwnerOrReadOnly(BasePermission):
-    """
-    Allow safe methods for everyone. For write methods, only allow the object's creator or staff.
-    """
-    def has_object_permission(self, request, view, obj):
-        if request.method in SAFE_METHODS:
-            return True
-        # obj.created_by may be null; check both conditions
-        return (hasattr(obj, 'created_by') and obj.created_by == request.user) or request.user.is_staff
+    permission_classes = [IsAuthenticatedOrReadOnly]
 
 class BookCreateView(generics.CreateAPIView):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [IsAuthenticated]
 
     def perform_create(self, serializer):
         # attach the current user to created_by automatically
@@ -35,7 +26,7 @@ class BookCreateView(generics.CreateAPIView):
 class BookUpdateView(generics.UpdateAPIView):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
-    permission_classes = [IsOwnerOrReadOnly]
+    permission_classes = [IsAuthenticated]
 
     # if you need to do something special when updating, override perform_update
     def perform_update(self, serializer):
@@ -44,6 +35,8 @@ class BookUpdateView(generics.UpdateAPIView):
 class BookDeleteView(generics.DestroyAPIView):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
-    permission_classes = [IsOwnerOrReadOnly]
+    permission_classes = [IsAuthenticated]
 
+    def perform_destroy(self, serializer):
+        serializer.delete()
 
