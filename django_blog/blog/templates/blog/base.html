@@ -21,6 +21,8 @@
     <div class="content">
         {% block content %}
         <!-- Page-specific content goes here -->
+         {% load static %}
+         <link rel="stylesheet" href="{% static 'css/auth.css' %}">
         {% endblock %}
     </div>
 
