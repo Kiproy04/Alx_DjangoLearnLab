@@ -1,8 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import LoginView, LogoutView
-from django.shortcuts import render, redirect
 from .forms import RegistrationForm, UserUpdateForm, ProfileUpdateForm
 
 class UserLoginView(LoginView):
