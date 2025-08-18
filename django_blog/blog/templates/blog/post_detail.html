@@ -1,1 +1,63 @@
-<!DOCTYPE html>
+{% extends "base.html" %}
+{% block title %}{{ post.title }}{% endblock %}
+{% block content %}
+
+<article>
+  <h1>{{ post.title }}</h1>
+  <p>by {{ post.author }} · {{ post.created_at|date:"M d, Y H:i" }}</p>
+  <div>{{ post.content|linebreaks }}</div>
+</article>
+
+{% if user.is_authenticated and user == post.author %}
+  <p>
+    <a href="{% url 'post-update' post.pk %}">Edit Post</a> |
+    <a href="{% url 'post-delete' post.pk %}">Delete Post</a>
+  </p>
+{% endif %}
+
+<hr>
+<section id="comments">
+  <h2>Comments ({{ comments|length }})</h2>
+
+  {% if comments %}
+    <ul>
+      {% for c in comments %}
+        <li>
+          <p><strong>{{ c.author }}</strong> · {{ c.created_at|date:"M d, Y H:i" }}</p>
+          <p>{{ c.content|linebreaks }}</p>
+
+          {% if user.is_authenticated and user == c.author %}
+            <p>
+              <a href="{% url 'comment-update' c.pk %}">Edit</a> |
+              <a href="{% url 'comment-delete' c.pk %}">Delete</a>
+            </p>
+          {% endif %}
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>No comments yet.</p>
+  {% endif %}
+</section>
+
+{% if user.is_authenticated %}
+  <hr>
+  <section id="add-comment">
+    <h3>Leave a comment</h3>
+    <form method="post" action="{% url 'comment-create' post.pk %}">
+      {% csrf_token %}
+      {{ comment_form.non_field_errors }}
+      <div>
+        {{ comment_form.content.label_tag }}
+        {{ comment_form.content }}
+        {{ comment_form.content.errors }}
+      </div>
+      <button type="submit">Post Comment</button>
+    </form>
+  </section>
+{% else %}
+  <p><a href="{% url 'login' %}?next={% url 'post-detail' post.pk %}">Log in</a> to comment.</p>
+{% endif %}
+
+<p><a href="{% url 'post-list' %}">← Back to posts</a></p>
+{% endblock %}

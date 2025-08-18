@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}Delete Comment{% endblock %}
+{% block content %}
+<h1>Delete this comment?</h1>
+<p>{{ object.content|linebreaks }}</p>
+<form method="post">
+  {% csrf_token %}
+  <button type="submit">Confirm delete</button>
+  <a href="{% url 'post-detail' object.post.pk %}">Cancel</a>
+</form>
+{% endblock %}

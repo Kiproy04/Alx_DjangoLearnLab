@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block title %}Edit Comment{% endblock %}
+{% block content %}
+<h1>Edit Comment</h1>
+<form method="post">
+  {% csrf_token %}
+  {{ form.non_field_errors }}
+  <div>
+    {{ form.content.label_tag }}
+    {{ form.content }} {{ form.content.errors }}
+  </div>
+  <button type="submit">Save</button>
+</form>
+<p><a href="{% url 'post-detail' object.post.pk %}">Cancel</a></p>
+{% endblock %}
+{% if user.is_authenticated %}
+  <hr>
+  <section id="edit-comment">
+    <h3>Edit your comment</h3>
+    <form method="post" action="{% url 'comment-update' comment.pk %}">
+      {% csrf_token %}
+      {{ comment_form.non_field_errors }}
+      <div>
+        {{ comment_form.content.label_tag }}
+        {{ comment_form.content }}
+        {{ comment_form.content.errors }}
+      </div>
+      <button type="submit">Update Comment</button>
+    </form>
+  </section>
+{% else %}
+  <p><a href="{% url 'login' %}?next={% url 'post-detail' post.pk %}">Log in</a> to edit your comment.</p>
+{% endif %}
+{% endblock %}
