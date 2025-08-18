@@ -29,7 +29,6 @@ class ProfileUpdateForm(forms.ModelForm):
         fields = ("bio", "avatar")
 
 class PostForm(forms.ModelForm):
-    tags = forms.CharField(required=False, help_text="Add tags separated by commas")
     class Meta:
         model = Post
         fields = ("title", "content", "tags")

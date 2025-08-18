@@ -9,6 +9,7 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView, D
 from django.urls import reverse_lazy, reverse
 from .models import Post, Comment, Tag
 from django.db.models import Q
+from taggit.models import Tag
 from .forms import PostForm, CommentForm
 
 class UserLoginView(LoginView):
