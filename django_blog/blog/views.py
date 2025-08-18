@@ -7,7 +7,8 @@ from .forms import RegistrationForm, UserUpdateForm, ProfileUpdateForm
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy, reverse
-from .models import Post, Comment
+from .models import Post, Comment, Tag
+from django.db.models import Q
 from .forms import PostForm, CommentForm
 
 class UserLoginView(LoginView):
@@ -50,7 +51,7 @@ class PostListView(ListView):
     template_name = "blog/post_list.html"
     context_object_name = "posts"
     ordering = ["-created_at"]
-    paginate_by = 10  # optional
+    paginate_by = 10  
 
 class PostDetailView(DetailView):
     model = Post
@@ -128,3 +129,20 @@ class CommentDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 
     def get_success_url(self):
         return reverse_lazy("post-detail", kwargs={"pk": self.object.post_id})
+
+def search_posts(request):
+    query = request.GET.get('q')
+    results = Post.objects.all()
+    if query:
+        results = results.filter(
+            Q(title__icontains=query) |
+            Q(content__icontains=query) |
+            Q(tags__name__icontains=query)
+        ).distinct()
+    return render(request, 'blog/search_results.html', {'results': results, 'query': query})
+
+
+def posts_by_tag(request, tag_name):
+    tag = get_object_or_404(Tag, name=tag_name)
+    posts = tag.posts.all()
+    return render(request, 'blog/posts_by_tag.html', {'tag': tag, 'posts': posts})

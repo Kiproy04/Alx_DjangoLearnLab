@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import get_user_model
-from .models import Profile, Post, Comment
+from .models import Profile, Post, Comment, Tag
 
 User = get_user_model()
 
@@ -29,13 +29,27 @@ class ProfileUpdateForm(forms.ModelForm):
         fields = ("bio", "avatar")
 
 class PostForm(forms.ModelForm):
+    tags = forms.CharField(required=False, help_text="Add tags separated by commas")
     class Meta:
         model = Post
-        fields = ("title", "content")
+        fields = ("title", "content", "tags")
         widgets = {
             "title": forms.TextInput(attrs={"placeholder": "Post title"}),
             "content": forms.Textarea(attrs={"rows": 10, "placeholder": "Write your post..."}),
         }
+
+    def save(self, commit=True, user=None):
+        post = super().save(commit=False)
+        if user:
+            post.author = user
+        if commit:
+            post.save()
+            # handle tags
+            tag_names = [t.strip() for t in self.cleaned_data['tags'].split(',') if t.strip()]
+            for name in tag_names:
+                tag, created = Tag.objects.get_or_create(name=name)
+                post.tags.add(tag)
+        return post
 
 class CommentForm(forms.ModelForm):
     class Meta:

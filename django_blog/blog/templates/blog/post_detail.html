@@ -61,3 +61,20 @@
 
 <p><a href="{% url 'post-list' %}">← Back to posts</a></p>
 {% endblock %}
+<p><strong>Tags:</strong>
+    {% for tag in post.tags.all %}
+        <a href="{% url 'posts_by_tag' tag.name %}">{{ tag.name }}</a>
+    {% empty %}
+        No tags
+    {% endfor %}
+</p>
+
+{% if post.tags.all %}
+    <p><strong>Tags:</strong>
+    {% for tag in post.tags.all %}
+        <a href="{% url 'posts_by_tag' tag.name %}">{{ tag.name }}</a>
+    {% empty %}
+        No tags
+    {% endfor %}
+    </p>
+{% endif %}
