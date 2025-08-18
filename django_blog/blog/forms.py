@@ -35,6 +35,7 @@ class PostForm(forms.ModelForm):
         widgets = {
             "title": forms.TextInput(attrs={"placeholder": "Post title"}),
             "content": forms.Textarea(attrs={"rows": 10, "placeholder": "Write your post..."}),
+            "tags": forms.TextInput(attrs={"placeholder": "Add tags (comma separated)"}),
         }
 
     def save(self, commit=True, user=None):
