@@ -16,6 +16,8 @@ class RegisterSerializer(serializers.ModelSerializer):
             email=validated_data.get("email"),
             password=validated_data["password"]
         )
+
+        Token.objects.create(user=user)
         return user
 
 
@@ -34,7 +36,14 @@ class LoginSerializer(serializers.Serializer):
         if not user:
             raise serializers.ValidationError("Invalid username or password")
 
-        return {"user": user}
+        token, _ = Token.objects.get_or_create(user=user)
+
+        return {
+            "username": user.username,
+            "email": user.email,
+            "token": token.key
+        }
+
     
 class UserProfileSerializer(serializers.ModelSerializer):
     followers_count = serializers.IntegerField(source='followers_count', read_only=True)

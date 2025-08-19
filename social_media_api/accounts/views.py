@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.authtoken.models import Token
 from .serializers import RegisterSerializer, LoginSerializer, UserProfileSerializer
-from .models import User
+
 
 class RegisterView(APIView):
     permission_classes = [permissions.AllowAny]
