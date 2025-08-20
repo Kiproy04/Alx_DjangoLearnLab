@@ -49,7 +49,6 @@ class LoginSerializer(serializers.Serializer):
 class UserProfileSerializer(serializers.ModelSerializer):
     followers_count = serializers.IntegerField(source='followers_count', read_only=True)
     following_count = serializers.IntegerField(source='following_count', read_only=True)
-
     class Meta:
         model = User
         fields = (
@@ -62,3 +61,23 @@ class UserProfileSerializer(serializers.ModelSerializer):
             "following_count",
         )
 
+class UserSerializer(serializers.ModelSerializer):
+    followers = serializers.SerializerMethodField()
+    following = serializers.SerializerMethodField()
+    class Meta:
+        model = User
+        fields = [
+            "id",
+            "username",
+            "email",
+            "bio",
+            "profile_picture",
+            "followers",
+            "following",
+        ]
+
+    def get_followers(self, obj):
+        return UserProfileSerializer(obj.followers.all(), many=True, context=self.context).data
+
+    def get_following(self, obj):
+        return UserProfileSerializer(obj.following.all(), many=True, context=self.context).data
