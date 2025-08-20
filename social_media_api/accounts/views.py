@@ -56,7 +56,7 @@ class UserViewSet(viewsets.ModelViewSet):
 
     
 class FollowUserView(generics.GenericAPIView):
-    queryset = User.objects.all()
+    queryset = CustomUser.objects.all()
     permission_classes = [IsAuthenticated]
 
     def post(self, request, user_id):
@@ -68,7 +68,7 @@ class FollowUserView(generics.GenericAPIView):
 
 
 class UnfollowUserView(generics.GenericAPIView):
-    queryset = User.objects.all()
+    queryset = CustomUser.objects.all()
     permission_classes = [IsAuthenticated]
 
     def post(self, request, user_id):
