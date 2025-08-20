@@ -1,10 +1,10 @@
 from django.contrib import admin
-from django.contrib.auth.admin import UserAdmin as DjangoUserAdmin
-from .models import User
+from django.contrib.auth.admin import UserAdmin
+from .models import CustomUser
 
-@admin.register(User)
-class UserAdmin(DjangoUserAdmin):
-    fieldsets = DjangoUserAdmin.fieldsets + (
+@admin.register(CustomUser)
+class CustomUserAdmin(UserAdmin):
+    fieldsets = UserAdmin.fieldsets + (
         ('Profile', {'fields': ('bio', 'profile_picture', 'followers')}),
     )
     list_display = ('username', 'email', 'is_staff', 'is_active')

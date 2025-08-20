@@ -3,12 +3,12 @@ from django.contrib.auth import authenticate, get_user_model
 from rest_framework.authtoken.models import Token
 
 
-User = get_user_model()
+CustomUser = get_user_model()
 class RegisterSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)
 
     class Meta:
-        model = User
+        model = CustomUser
         fields = ("username", "email", "password")
 
     def create(self, validated_data):
@@ -50,7 +50,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
     followers_count = serializers.IntegerField(source='followers_count', read_only=True)
     following_count = serializers.IntegerField(source='following_count', read_only=True)
     class Meta:
-        model = User
+        model = CustomUser
         fields = (
             "id",
             "username",
@@ -65,7 +65,7 @@ class UserSerializer(serializers.ModelSerializer):
     followers = serializers.SerializerMethodField()
     following = serializers.SerializerMethodField()
     class Meta:
-        model = User
+        model = CustomUser
         fields = [
             "id",
             "username",
